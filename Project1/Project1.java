@@ -37,59 +37,53 @@ public class Project1 {
       int numPos = 0;
       
       //get first number in string
-      for(int i = 1; true ; i++){
-         if ( s.charAt(i) == ' ' ){
-            try {
-               arr[numPos++] = Integer.parseInt(s.substring(0, i));
-            } catch(NumberFormatException e){
-               System.out.println("String could not be parsed into an integer");
-            }
-            break;
-         }
-      }
-      
       //find numbers in string
       //get the starting index of the number in string
-      for(int i = 2; i < s.length(); i++){ //Note: loop is redunant, only gets used at the begining of the string.
-         
-         //find a character that is always before numbers
-         if(s.charAt(i) != '('){
-            continue;
-         } else{
-            //get final index of the number in string 
-            for(int j = i + 2; j < s.length(); j++){
-            
-               //location of a number is between i and j
-               if (s.charAt(j) == ','){
-               
-                  //put number in array at index numPos and increase numPos by 1
-                  try {
-                     arr[numPos++] = Integer.parseInt(s.substring(i + 1, j));
-                     
-                  } catch(NumberFormatException e){
-                     System.out.println("String could not be parsed into an integer");
-                  }
-                  
-                  //increase i and j for next position of number in current parethisis
-                  i = j;
-                  j = j + 1;
-                 
-                 //elif is for gathering the 2nd number in current parethisis
-               } else if( s.charAt(j) == ')' ){
-               
-                  //put number in array at index numPos and increase numPos by 1
-                  try {
-                     arr[numPos++] = Integer.parseInt(s.substring(i + 1, j));
-                     
-                  } catch(NumberFormatException e){
-                     System.out.println("String could not be parsed into an integer");
-                  }
-                  //increase i and j for next position of number in next parethisis
-                  i = j + 1;
-                  j = i + 1;
+      {  
+         int i;
+         for(i = 1; true ; i++){
+            if ( s.charAt(i) == ' ' ){
+               try {
+                  arr[numPos++] = Integer.parseInt(s.substring(0, i));
+               } catch(NumberFormatException e){
+                  System.out.println("String could not be parsed into an integer");
                }
+               break;
             }
-         } 
+         }
+         i = i + 1;
+         for(int j = i + 2; j < s.length(); j++){
+            
+            //location of a number is between i and j
+            if (s.charAt(j) == ','){
+               
+               //put number in array at index numPos and increase numPos by 1
+               try {
+                  arr[numPos++] = Integer.parseInt(s.substring(i + 1, j));
+                     
+               } catch(NumberFormatException e){
+                  System.out.println("String could not be parsed into an integer");
+               }
+                  
+               //increase i and j for next position of number in current parethisis
+               i = j;
+               j = j + 1;
+                 
+              //elif is for gathering the 2nd number in current parethisis
+            } else if( s.charAt(j) == ')' ){
+               
+               //put number in array at index numPos and increase numPos by 1
+               try {
+                  arr[numPos++] = Integer.parseInt(s.substring(i + 1, j));
+                     
+               } catch(NumberFormatException e){
+                  System.out.println("String could not be parsed into an integer");
+               }
+               //increase i and j for next position of number in next parethisis
+               i = j + 1;
+               j = i + 1;
+            }
+         }
       }
       System.out.println(Arrays.toString(arr)); //Debug
       int[] components = new int[arr.length * 2];

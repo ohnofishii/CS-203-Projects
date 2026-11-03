@@ -169,6 +169,5 @@ public class Project1 {
       }
       //do nothing if num is not found
       return compIndex;
-      //test commit
    }
 }

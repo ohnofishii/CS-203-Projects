@@ -86,9 +86,88 @@ public class Project1 {
          }
       }
       System.out.println(Arrays.toString(arr)); //Debug
-      int[] components = new int[arr.length * 2];
-      for(int i = 0; i < components.length; i++){
+      
+      //put different graph nodes as components within the array comp
+      int[] comps = new int[arr.length + 2];
+      int compIndex = 0;
+      
+      boolean numInArr = true;
+      while( numInArr == true ){
+         numInArr = false;
+         //check if there exists a number in arr
+         for( int i = 1; i < arr.length; i++ ){
+            if (arr[i] != 0){
+               numInArr = true;
+               //find next nodes of the num in arr;
+               compIndex = DFS(arr, comps, compIndex, arr[i], i);
+               //increase compsIndex to differentiate different components;
+               compIndex++;
+               break;
+            }
+         }
          
+         // if there is no num in arr then break out of loop
+         if ( numInArr == false ){
+            break;
+         }
       }
+      
+       System.out.println(Arrays.toString(comps)); //Debug
+      
+   }
+   //recursive
+   //returns current compIndex
+      //finds a number in arr 
+      //deletes it
+      //calls itself if deleted an elemnt;
+      //arr: the array of integers
+      //comps: components of the 
+      //num: a "node"
+   private static int DFS(int[] arr, int[]comps, int compIndex, int num, int pos) {
+      int i;
+      //find num in arr
+      for ( i = pos; i < arr.length; i++) {
+         if(arr[i] == num){
+            //if in arr put in comps if not in comps
+            for(int j = 0; j <= compIndex; j++){
+               if( comps[j] == num ){
+                  break;
+               }else if(j == compIndex){
+                  comps[compIndex++] = num;
+                  break;
+               }
+            }
+            
+            //remove the number
+            arr[i] = 0;
+            //check if number is odd to find its partner
+            int nextNum;
+            if( i % 2 == 1 ){
+               nextNum = arr[i+1];
+               arr[i+1] = 0;
+            }else {
+               nextNum = arr[i-1];
+               arr[i-1] = 0;
+            }
+            //put nextnum in comps if not in comps 
+            for(int j = 0; j <= compIndex; j++){
+               if( comps[j] == nextNum ){
+                  break;
+               }else if(j == compIndex){
+                  comps[compIndex++] = nextNum;
+                  break;
+               }
+               
+            }
+            //call DFS on next num
+            compIndex = DFS(arr, comps, compIndex, nextNum, 1);
+            //call DFS on currNum
+            compIndex = DFS(arr, comps, compIndex, num, 1);
+            //stop the loop;
+            break;
+         }
+      }
+      //do nothing if num is not found
+      return compIndex;
    }
 }

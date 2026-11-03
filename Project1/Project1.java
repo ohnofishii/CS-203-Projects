@@ -112,7 +112,7 @@ public class Project1 {
          }
       }
       
-       System.out.println(Arrays.toString(comps)); //Debug
+      System.out.println(Arrays.toString(comps)); //Debug
       
    }
    //recursive
@@ -169,5 +169,6 @@ public class Project1 {
       }
       //do nothing if num is not found
       return compIndex;
+      //test commit
    }
 }

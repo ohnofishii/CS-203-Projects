@@ -30,8 +30,8 @@ public class Project1 {
             String strComps = "{";
             //number of components
             int numOfComps = 0;
-            for(int i = 0; i < comps.length - 1; i++){
-               //check if at comps[i] is a number
+            for(int i = 0; i < comps.length; i++){
+               //check if at comps[i] is not 0
                if(comps[i] != 0){
                   strComps = strComps + comps[i];
                   if(comps[i+1] != 0) {
@@ -49,7 +49,7 @@ public class Project1 {
                   numOfComps++;
                }
             }
-            System.out.println("Graph" + group++ + ":\n" + numOfComps + " connected components: " + strComps.substring(0, strComps.length() - 1));
+            System.out.println("Graph" + group++ + ":\n" + numOfComps + " connected components: " + strComps.substring(0, strComps.length() - 1) + "\n" );
          }
       } catch (java.io.IOException e) { //Exeption class: catches error if file name is not valid
          System.out.println("File name not found");

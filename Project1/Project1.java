@@ -18,18 +18,47 @@ public class Project1 {
          // Creating a scanner taking the file name
          Scanner scannerInputFile = new Scanner(new File(fileName));
          // int lineCount = 0; // DEBUG: creating int to count # of lines in .txt
-      
+         
+         //int group for each line in txt
+         int group = 1;
          while (scannerInputFile.hasNextLine()) {
             // lineCount++; // DEBUG: read line and increment by 1
             String inputFileLine = scannerInputFile.nextLine(); // move to next line            
-            part1(inputFileLine);
+            int[] comps = part1(inputFileLine);
+            
+            //String to print
+            String strComps = "{";
+            //number of components
+            int numOfComps = 0;
+            for(int i = 0; i < comps.length - 1; i++){
+               //check if at comps[i] is a number
+               if(comps[i] != 0){
+                  strComps = strComps + comps[i];
+                  if(comps[i+1] != 0) {
+                     strComps = strComps + ", ";
+                  } else {
+                     strComps = strComps + "} {";
+                  }
+               
+               //check if at comps[i] is 0
+               }else if( comps[i] == 0){
+                  //if the previous is also 0 then there are no more components
+                  if( i - 1 >= 0 && comps[i - 1] == 0 )
+                     break;
+                  //increase num of components
+                  numOfComps++;
+               }
+            }
+            System.out.println("Graph" + group++ + ":\n" + numOfComps + " connected components: " + strComps.substring(0, strComps.length() - 1));
          }
       } catch (java.io.IOException e) { //Exeption class: catches error if file name is not valid
          System.out.println("File name not found");
       }
    }
    
-   private static void part1(String s){
+   
+   //returns the components of string s as an array of integers for main method to print
+   private static int[] part1(String s){
       
       //Input numbers into an array
       //create array for numbers
@@ -85,10 +114,10 @@ public class Project1 {
             }
          }
       }
-      System.out.println(Arrays.toString(arr)); //Debug
+      //System.out.println(Arrays.toString(arr)); //Debug
       
       //put different graph nodes as components within the array comp
-      int[] comps = new int[arr.length + 2];
+      int[] comps = new int[arr[0]*2];
       int compIndex = 0;
       
       boolean numInArr = true;
@@ -112,8 +141,9 @@ public class Project1 {
          }
       }
       
-      System.out.println(Arrays.toString(comps)); //Debug
-      
+      //System.out.println(Arrays.toString(comps)); //Debug
+      //return comps for main method to print;
+      return comps;
    }
    //recursive
    //returns current compIndex

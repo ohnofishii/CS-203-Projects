@@ -1,6 +1,8 @@
 package Project2.Algorithms.Sort;
 
-public class Sort {
+import java.util.Arrays;
+
+public class sort {
     private int count;
     // TODO: add a timer to track the time it takes to execute (probably somehting outside this file that will manage it)
 
@@ -159,8 +161,90 @@ public class Sort {
     // Desc: Performing heap sort
     // Input: An array
     // Output: A sorted array using heap sort
-    public void heapSort(int arr[])
-    {
+    public void heapSort(int[] arr)
+    {   
+        heapSortBuildMaxHeap(arr);
 
+        // Debug:
+        // System.out.println(Arrays.toString(arr));
+
+        //Build a sorted array from a heap
+        for( int i = arr.length - 1; i > 0; i--){
+            //swap first and index i
+            swap(arr, 0, i);
+            //apply heapify on first node
+            heapSortHeapify(arr, 0, i);
+        }
+        // Debug:
+        // System.out.println(Arrays.toString(arr));
+
+    }
+
+
+    // Desc: builds a max heap from an array of random numbers
+    // Input: an array
+    // Output: applies changes to input arr
+    private void heapSortBuildMaxHeap(int[] arr)
+    {
+        //Get the last parent node location
+        int root = (int)( Math.ceil ( arr.length - 1 / 2 ) ) - 1;
+
+        //apply heapify to all parent nodes starting from the end.
+        for(int i = root ; i >= 0; i--) {
+            heapSortHeapify(arr, i, arr.length);
+        }
+        
+    }
+
+    // Desc: recursive, swaps root node with greatest child if less than child, continues down tree
+    // Input: An array, a root index
+    // Output: applies changes to input arr
+    private void heapSortHeapify(int[] arr, int root, int lastNode)
+    {
+        int leftChild = root * 2 + 1;
+        int rightChild = leftChild + 1;
+
+        //Check if right child exists
+        if(rightChild < lastNode) 
+        {
+            //Check if the greatest child is bigger than the root
+            if ( Math.max(arr[leftChild], arr[rightChild]) > arr[root] )
+                {
+                    //check if leftChild is greater than right
+                if(arr[leftChild] >= arr[rightChild]) 
+                    {
+                        swap(arr, leftChild, root);
+                        //call heapify on the next substree
+                        heapSortHeapify(arr, leftChild, lastNode);
+                    }
+                else //rightchild is greater than left
+                {
+                    swap(arr, rightChild, root);
+                    //call heapify on the next substree
+                    heapSortHeapify(arr, rightChild, lastNode);
+                }
+            }
+        //Check if left child exists,  right child does not exist
+        }else if(leftChild < lastNode)
+        {
+            //Check if leftchild is greater than root
+            if( arr[leftChild] > arr[root])
+            {
+                swap(arr, leftChild, root);
+                //call heapify on the next substree
+                heapSortHeapify(arr, leftChild, lastNode);
+            }
+        }
+        //If there is no leftchild or right child then do nothing
+    }
+
+    // Desc: swaps 2 integers inside of an array
+    // Input: an array, 2 positions
+    // Output: applies changes to input arr
+    private void swap(int[] arr, int p, int q )
+    {
+        int temp = arr[p];
+        arr[p] = arr[q];
+        arr[q] = temp;
     }
 }

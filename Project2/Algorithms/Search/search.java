@@ -1,6 +1,6 @@
 package Project2.Algorithms.Search;
 
-public class Search {
+public class search {
     // binary search
     public int binarySearch(int arr[])
     {

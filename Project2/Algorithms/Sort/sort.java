@@ -145,8 +145,78 @@ public class sort {
     // Desc: Performing merge sort
     // Input: An array
     // Output: A sorted array using merge sort
-    public void mergeSort(int arr[])
+    public void mergeSort(int[] arr)
     {
+        mergeSortRecursive(arr, 0, arr.length);
+        // Debug:
+        // System.out.println( Arrays.toString(arr) );
+    }
+
+    // Desc: uses l and r to partition the array,
+    // l is inclusive, r is exclusive
+    // Input: An array, left index, and right index 
+    // Output: applies changes to arr
+    private void mergeSortRecursive(int[] arr, int l, int r)
+    {   
+        //get the middle of the partition
+        int m1 = (r - l)/2 + l;
+        int m2 = m1;
+        
+        if(r - l > 1){
+        mergeSortRecursive(arr, l, m1);
+        mergeSortRecursive(arr, m1, r);
+        }
+
+        // Create a temporary array with a size of r - l;
+        int[] tempArr = new int[r-l];
+        int tempArrIndex = 0;
+        
+
+        //Create a placeholder variable to not change l
+        int l2 = l;
+        //Sort the left and right arrays into a temporary array;
+        //loop through both left and right simultaniusly
+        //Check if left and right index is smaller than size of its partition
+        while (l2 < m1 || m2 < r) {
+        //Check if l2 is in bounds
+        if(  l2 < m1 )
+        {
+            //Check if m2 is in bounds
+            if ( m2 < r)
+            {
+                //check if arr[l2] less than or equal to arr[m2]
+                if( arr[l2] <= arr[m2] )
+                {
+                    tempArr[tempArrIndex++] = arr[l2];
+                    l2++;
+                }
+                else //arr[m2] is greater than arr[l2]
+                {
+                    tempArr[tempArrIndex++] = arr[m2];
+                    m2++;
+                }
+
+            } else
+            {
+                tempArr[tempArrIndex++] = arr[l2];
+                l2++;
+            }
+            
+        }
+        else //else m2 is in bounds
+        {
+            tempArr[tempArrIndex++] = arr[m2];
+            m2++;
+        }
+        }
+
+        //Put variables in tempArr into main array
+        for(int num : tempArr)
+        {
+        arr[l++] = num;
+        }
+
+          
 
     }
 
@@ -163,6 +233,7 @@ public class sort {
     // Output: A sorted array using heap sort
     public void heapSort(int[] arr)
     {   
+        // Create a heap from a random array
         heapSortBuildMaxHeap(arr);
 
         // Debug:
@@ -181,7 +252,7 @@ public class sort {
     }
 
 
-    // Desc: builds a max heap from an array of random numbers
+    // Desc: helper method, builds a max heap from an array of random numbers
     // Input: an array
     // Output: applies changes to input arr
     private void heapSortBuildMaxHeap(int[] arr)
@@ -196,7 +267,7 @@ public class sort {
         
     }
 
-    // Desc: recursive, swaps root node with greatest child if less than child, continues down tree
+    // Desc: helped method, recursive, swaps root node with greatest child if less than child, continues down tree
     // Input: An array, a root index
     // Output: applies changes to input arr
     private void heapSortHeapify(int[] arr, int root, int lastNode)
@@ -238,7 +309,7 @@ public class sort {
         //If there is no leftchild or right child then do nothing
     }
 
-    // Desc: swaps 2 integers inside of an array
+    // Desc: helper method, swaps 2 integers inside of an array
     // Input: an array, 2 positions
     // Output: applies changes to input arr
     private void swap(int[] arr, int p, int q )

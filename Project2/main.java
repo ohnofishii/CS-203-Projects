@@ -14,8 +14,8 @@ public class Main {
         }
 
         // Debug:
-        // System.out.println( Arrays.toString(arr) );
+        System.out.println( Arrays.toString(arr) );
 
-        alg.heapSort(arr);
+        alg.mergeSort(arr);
     }
 }

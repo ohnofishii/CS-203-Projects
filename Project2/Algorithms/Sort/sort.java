@@ -162,6 +162,7 @@ public class sort {
         int m1 = (r - l)/2 + l;
         int m2 = m1;
         
+        //Check if size of partition is greater than 1;
         if(r - l > 1){
         mergeSortRecursive(arr, l, m1);
         mergeSortRecursive(arr, m1, r);

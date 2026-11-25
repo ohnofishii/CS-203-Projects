@@ -224,9 +224,21 @@ public class sort {
     // Desc: Performing quick sort
     // Input: An array
     // Output: A sorted array using quick sort
-    public void quickSort(int arr[])
+    public void quickSort(int arr[], int left, int right)
     {
         
+        // NOTE: We can perform a better pivot selection to avoid the worst case scenario
+        // NOTE: We can perform insertion sort when the subarray is small
+        // NOTE: We can perform quick sort iteratively instead of recursively 
+
+        if (left < right)
+        {
+            // Step 1: Get the pivot via Lomuto Partitioning
+            int partitionNum = lomutoPartition(arr, left, right);
+            // Step 2: Quick sort of left-right & right-left subarrays 
+            quickSort(arr, left, partitionNum-1);
+            quickSort(arr, partitionNum+1, right);
+        }
     }
 
     // Desc: Performing heap sort
@@ -318,5 +330,24 @@ public class sort {
         int temp = arr[p];
         arr[p] = arr[q];
         arr[q] = temp;
+    }
+
+    // Desc: Performing Lomuto Partitioning. Helper function for quickSort.
+    // Input: 
+    public int lomutoPartition(int arr[], int left, int right)
+    {
+        int pivot = arr[right]; // choosing last element as pivot
+        int i = left-1;
+
+        for (int j = 0; j < arr.length-1; j++)
+        {
+            if (arr[j] < pivot)
+            {
+                 i++;
+                swap(arr, i, j);
+            }
+        }
+        swap(arr, i+1, arr[right]);
+        return i + 1;
     }
 }
